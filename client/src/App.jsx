@@ -12,7 +12,13 @@ function App() {
           <Nav navbar>
             <NavbarBrand href="/">🐕‍🦺 🐩 DeShawn's Dog Walking</NavbarBrand>
             <NavItem>
+              <NavLink href="/">Home</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink href="/walkers">Walkers</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/cities">Cities</NavLink>
             </NavItem>
           </Nav>
         </Navbar>
