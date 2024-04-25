@@ -233,4 +233,26 @@ app.MapGet("/api/hello", () =>
 });
 
 
+app.MapGet("/api/dogs", () => 
+{
+    return dogs.Select(d => new DogDTO
+    {
+        Id = d.Id,
+        Name = d.Name,
+        CityId = d.CityId,
+        City = new CityDTO
+        {
+            Id = cities.FirstOrDefault(c => c.Id == d.CityId).Id,
+            Name = cities.FirstOrDefault(c => c.Id == d.CityId).Name
+        },
+        WalkerId = d.WalkerId ,
+        Walker = d.WalkerId != null ? new WalkerDTO
+        {
+            Id = walkers.FirstOrDefault(w => w.Id == d.WalkerId).Id,
+            Name = walkers.FirstOrDefault(w => w.Id == d.WalkerId).Name
+        } : null
+    });
+});
+
+
 app.Run();

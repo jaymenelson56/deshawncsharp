@@ -1,5 +1,6 @@
 import { getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
+import { DogList } from "./components/Dogs/DogList";
 
 export default function Home() {
   const [greeting, setGreeting] = useState({
@@ -14,5 +15,7 @@ export default function Home() {
       });
   }, []);
 
-  return <p>{greeting.message}</p>;
+  return (<><p>{greeting.message}</p>
+<DogList /></>)
+;
 }
