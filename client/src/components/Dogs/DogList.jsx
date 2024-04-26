@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { getDogs } from "../Services/Fetches"
+import { Link } from "react-router-dom"
 
 
 export const DogList = () => {
@@ -18,7 +19,7 @@ export const DogList = () => {
             <ul className="dogs-list">
                 {dogs.map((dog) => {
                     return (<li key={dog.id}>
-                        {dog.name}
+                        <Link to={`/${dog.id}`}>{dog.name}</Link>
                     </li>)
                 })}
             </ul>
