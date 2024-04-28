@@ -21,3 +21,7 @@ export const createDog = (dog) => {
         body:JSON.stringify(dog)
     })
 }
+
+export const getWalkers = () => {
+    return fetch ("/api/walkers").then((res) => res.json())
+}

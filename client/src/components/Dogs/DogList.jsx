@@ -30,11 +30,11 @@ export const DogList = () => {
 }
 
 
-//List of dogs is The Header and it is centered Centered 
 
-//List of the dogs from the API using a fetch function
 
-//Clicking the dog brings them to page detailing the dogs
-//Add Dog button below and to the right of the header that brings user to dog form
+
+
+
+
 
 //A remove button will be next to dog list that will delete dog from api

@@ -1,5 +1,6 @@
 using DogWalker.Models;
 using DogWalker.Models.DTOs;
+using Microsoft.AspNetCore.HttpLogging;
 
 List<Dog> dogs = new List<Dog>
 {
@@ -286,11 +287,25 @@ app.MapGet("/api/dogs/{id}", (int id) =>
 
 app.MapGet("/api/cities", () =>
 {
-    return cities.Select(c => new CityDTO
+    List<CityDTO> citiesWithWalkers = cities.Select((City city) =>
     {
-        Id = c.Id,
-        Name = c.Name
-    });
+        List<Walker> walkersWorking = walkerCities
+        .Where(wc => wc.CityId == city.Id)
+        .Select(wc => walkers.FirstOrDefault((Walker w) => w.Id == wc.WalkerId))
+        .ToList();
+
+        return new CityDTO
+        {
+            Id = city.Id,
+            Name = city.Name,
+            Walkers = walkersWorking.Select((Walker w) => new WalkerDTO
+            {
+                Id = w.Id,
+                Name = w.Name
+            }).ToList()
+        };
+    }).ToList();
+    return citiesWithWalkers;
 });
 
 app.MapPost("/api/dogs", (Dog dog) =>
@@ -317,4 +332,31 @@ app.MapPost("/api/dogs", (Dog dog) =>
         } : null
     });
 });
+
+app.MapGet("/api/walkers", () =>
+{
+    List<WalkerDTO> walkerWithCities = walkers.Select((Walker walker) =>
+    {
+        List<City> citiesWalked = walkerCities
+        .Where(wc => wc.WalkerId == walker.Id)
+        .Select(wc => cities.FirstOrDefault((City c) => c.Id == wc.CityId))
+        .ToList();
+
+        return new WalkerDTO
+        {
+            Id = walker.Id,
+            Name = walker.Name,
+            Cities = citiesWalked.Select((City c) => new CityDTO 
+            {
+                Id = c.Id,
+                Name = c.Name
+            }).ToList()
+        };
+    }).ToList();
+
+    return walkerWithCities;
+});
+
+
+
 app.Run();
