@@ -1,4 +1,48 @@
-//List of Walkers centered as the header
+import { useEffect, useState } from "react";
+import { getCities, getWalkers } from "../Services/Fetches";
+
+
+export const WalkerList = () => {
+    const [walkers, setWalkers] = useState([])
+    const [cities, setCities] = useState([])
+    const [selected, setSelected] = useState("")
+
+    useEffect(() => {
+        getWalkers().then((walkerArray) => setWalkers(walkerArray))
+        getCities().then((cityArray) => setCities(cityArray))
+    }, [])
+
+   const handleCityChange = (event) => {
+        setSelected(event.target.value)
+   }
+
+    return (
+        <div>
+            <header>
+                <h2>Walker List</h2>
+                <select onChange={handleCityChange} value={selected}>
+                            <option value="" >All Cities</option>
+                            {cities.map((city) => (
+                                <option key={city.id} value={city.name}>
+                                    {city.name}
+                                </option>
+                            ))}
+                        </select>
+            </header>
+
+            <ul>
+                {walkers.filter((walker) =>
+                    selected === "" || walker.cities.some((city) => city.name === selected)
+                ).map((walker) => (
+                    <li key={walker.id}>
+                        <p>{walker.name}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
 
 //Include a dropdown that allows for user to choose city and see the walkers operreating in that city
 

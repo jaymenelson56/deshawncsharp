@@ -19,9 +19,9 @@ export const DogDetails = () => {
         </div>
     )
 }
-//Dog Name as header
 
-//Dog lives in this city
 
-//If dog is assigned a walker then display dog is being walked by this walker, else dog isn't currently assigned to walker
+
+
+
 
