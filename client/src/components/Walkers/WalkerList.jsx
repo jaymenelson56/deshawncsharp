@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { getCities, getWalkers } from "../Services/Fetches";
+import { useNavigate } from "react-router-dom";
 
 
 export const WalkerList = () => {
     const [walkers, setWalkers] = useState([])
     const [cities, setCities] = useState([])
     const [selected, setSelected] = useState("")
+    const navigate = useNavigate()
 
     useEffect(() => {
         getWalkers().then((walkerArray) => setWalkers(walkerArray))
@@ -35,7 +37,7 @@ export const WalkerList = () => {
                     selected === "" || walker.cities.some((city) => city.name === selected)
                 ).map((walker) => (
                     <li key={walker.id}>
-                        <p>{walker.name}</p>
+                        <div>{walker.name}<div><button onClick={() => {navigate(`/walkers/${walker.id}`)}}> Add Dog</button></div></div>
                     </li>
                 ))}
             </ul>
@@ -44,11 +46,7 @@ export const WalkerList = () => {
 }
 
 
-//Include a dropdown that allows for user to choose city and see the walkers operreating in that city
 
-//Include an add dog button next to the walker
-
-//if user clicks button it will take them to a page allowing them to add dogs to walkers route
 
 //If user clicks walker, they are brought to a page where they can edit walker info
 

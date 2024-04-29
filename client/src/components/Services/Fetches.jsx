@@ -25,3 +25,21 @@ export const createDog = (dog) => {
 export const getWalkers = () => {
     return fetch ("/api/walkers").then((res) => res.json())
 }
+
+export const getWalkerById = (id) => {
+    return fetch (`/api/walkers/${id}`).then((res) => res.json())
+}
+
+export const assignDogToWalker = async (dogId, walkersId) => {
+    
+        return fetch(`/api/dogs/${dogId}/assign?walkerId=${walkersId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: dogId,
+                walkerId: walkersId
+            })
+        });
+};
