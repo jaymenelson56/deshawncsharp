@@ -10,6 +10,7 @@ import { DogForm } from "./components/Dogs/DogForm";
 import { WalkerList } from "./components/Walkers/WalkerList";
 import { AddDogToWalker } from "./components/Walkers/AddDogToWalker";
 import { CityList } from "./components/Cities/CityList";
+import { WalkerForm } from "./components/Walkers/WalkerForm";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -26,6 +27,7 @@ root.render(
       </Route>
       <Route path = "/cities" element={<App />}>
         <Route index element={<CityList />} />
+        <Route path =":walkerId" element={<WalkerForm />} />
       </Route>
     </Routes>
   </BrowserRouter>,

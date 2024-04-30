@@ -1,6 +1,6 @@
 using DogWalker.Models;
 using DogWalker.Models.DTOs;
-using Microsoft.AspNetCore.HttpLogging;
+// using Microsoft.AspNetCore.HttpLogging;
 
 List<Dog> dogs = new List<Dog>
 {
@@ -405,6 +405,32 @@ app.MapPost("/api/cities", (City city) =>
     {
         Id = city.Id,
         Name = city.Name
+    });
+});
+
+app.MapPut("/api/walker-cities/update", (Walker walker) =>
+{
+   walkerCities = walkerCities.Where(wc => wc.WalkerId != walker.Id).ToList();
+
+   foreach(City city in walker.Cities)
+   {
+        WalkerCity newWC = new WalkerCity
+        {
+            WalkerId = walker.Id,
+            CityId = city.Id
+        };
+        newWC.Id = walkerCities.Count > 0 ? walkerCities.Max(wc => wc.Id) + 1: 1;
+        walkerCities.Add(newWC);
+   }
+});
+app.MapGet("/api/walker-cities", () => 
+{
+    return walkerCities.Select(d => new WalkerCityDTO
+    {
+        Id = d.Id,
+        WalkerId = d.WalkerId,
+        CityId = d.CityId
+
     });
 });
 

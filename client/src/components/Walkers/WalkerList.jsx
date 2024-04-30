@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCities, getWalkers } from "../Services/Fetches";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const WalkerList = () => {
@@ -38,7 +38,7 @@ export const WalkerList = () => {
                     selected === "" || walker.cities.some((city) => city.name === selected)
                 ).map((walker) => (
                     <li key={walker.id}>
-                        <div>{walker.name}<div><button onClick={() => {navigate(`/walkers/${walker.id}`)}}> Add Dog</button></div></div>
+                        <p><Link to={`/cities/${walker.id}`}>{walker.name}</Link></p><div><button onClick={() => {navigate(`/walkers/${walker.id}`)}}> Add Dog</button></div>
                     </li>
                 ))}
             </ul>

@@ -30,7 +30,7 @@ export const getWalkerById = (id) => {
     return fetch (`/api/walkers/${id}`).then((res) => res.json())
 }
 
-export const assignDogToWalker = async (dogId, walkersId) => {
+export const assignDogToWalker = (dogId, walkersId) => {
     
         return fetch(`/api/dogs/${dogId}/assign?walkerId=${walkersId}`, {
             method: 'PUT',
@@ -52,5 +52,15 @@ export const createCity = (city) => {
 
         },
         body:JSON.stringify(city)
+    })
+}
+
+export const updateWalkerCities = (walker) => {
+    return fetch ("/api/walker-cities/update", {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(walker)
     })
 }
