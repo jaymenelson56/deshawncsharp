@@ -397,5 +397,15 @@ app.MapPut("/api/dogs/{id}/assign", (int id, int walkerId) =>
     return Results.Ok();
 });
 
+app.MapPost("/api/cities", (City city) =>
+{
+    city.Id = cities.Max(c => c.Id) + 1;
+    cities.Add(city);
+    return Results.Created($"api/cities/{city.Id}", new CityDTO
+    {
+        Id = city.Id,
+        Name = city.Name
+    });
+});
 
 app.Run();
