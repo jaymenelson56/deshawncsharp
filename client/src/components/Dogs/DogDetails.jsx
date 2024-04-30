@@ -8,14 +8,14 @@ export const DogDetails = () => {
 
     useEffect(() => {
         getDogById(dogId).then((theDog) =>
-    setDog(theDog))
+            setDog(theDog))
     }, [])
     return (
         <div>
             <header>
                 <h2>{dog.name}</h2>
             </header>
-            <p>{dog.name} lives in {dog.city?.name} and {dog.walker ? `is being walked by ${dog.walker.name}.` : "is available to walk."}</p> 
+            <p>{dog.name} lives in {dog.city?.name} and {dog.walker ? `is being walked by ${dog.walker.name}.` : "is available to walk."}</p>
         </div>
     )
 }
