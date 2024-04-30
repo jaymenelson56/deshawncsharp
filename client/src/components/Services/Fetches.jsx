@@ -64,3 +64,9 @@ export const updateWalkerCities = (walker) => {
         body: JSON.stringify(walker)
     })
 }
+
+export const removeDog = (dog) => {
+    return fetch(`api/dogs/${dog}`, {
+        method: 'DELETE',
+    })
+}
