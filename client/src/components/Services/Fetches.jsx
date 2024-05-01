@@ -66,7 +66,28 @@ export const updateWalkerCities = (walker) => {
 }
 
 export const removeDog = (dog) => {
-    return fetch(`api/dogs/${dog}`, {
+    return fetch(`/api/dogs/${dog}`, {
+        method: 'DELETE',
+    })
+}
+
+export const removeWalker = (walker) => {
+    return fetch(`/api/walkers/${walker}`, {
+        method: 'DELETE',
+    })
+}
+
+export const unassignWalkerFromDogs = (walkerId) => {
+    return fetch(`/api/dogs/${walkerId}/unassign`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+};
+
+export const deleteWalkerCities = (walkerId) => {
+    return fetch (`/api/walker-cities/delete/${walkerId}`, {
         method: 'DELETE',
     })
 }

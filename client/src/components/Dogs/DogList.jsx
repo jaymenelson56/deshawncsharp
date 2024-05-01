@@ -26,7 +26,7 @@ export const DogList = () => {
             <ul className="dogs-list">
                 {dogs.map((dog) => {
                     return (<li key={dog.id}>
-                        <Link to={`/${dog.id}`}>{dog.name}</Link><div><button onClick={() => handleClick(dog.id)}>Remove</button></div>
+                        <p><Link to={`/${dog.id}`}>{dog.name}</Link></p><div><button onClick={() => handleClick(dog.id)}>Remove</button></div>
                     </li>)
                 })}
             </ul>

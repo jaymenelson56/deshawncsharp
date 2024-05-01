@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCities, getWalkers } from "../Services/Fetches";
+import { deleteWalkerCities, getCities, getDogs, getWalkers, removeWalker, unassignWalkerFromDogs } from "../Services/Fetches";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -7,23 +7,32 @@ export const WalkerList = () => {
     const [walkers, setWalkers] = useState([])
     const [cities, setCities] = useState([])
     const [selected, setSelected] = useState("")
+    const [dogs, setDogs] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         getWalkers().then((walkerArray) => setWalkers(walkerArray))
         getCities().then((cityArray) => setCities(cityArray))
+        getDogs().then((dogArray) => setDogs(dogArray))
     }, [])
 
    const handleCityChange = (event) => {
         setSelected(event.target.value)
    }
 
+   const handleClick = (walkerId) => {
+    unassignWalkerFromDogs(walkerId).then(() => {
+    removeWalker(walkerId).then(() => {
+    deleteWalkerCities(walkerId).then(() => { 
+    setWalkers(walkers.filter(walker => walker.id !== walkerId)) })})
+    })
+}
 
     return (
         <div>
             <header>
                 <h2>Walker List</h2>
-                <select onChange={handleCityChange} value={selected}>
+                <select id="citySelect" onChange={handleCityChange} value={selected}>
                             <option value="" >All Cities</option>
                             {cities.map((city) => (
                                 <option key={city.id} value={city.name}>
@@ -39,6 +48,7 @@ export const WalkerList = () => {
                 ).map((walker) => (
                     <li key={walker.id}>
                         <p><Link to={`/cities/${walker.id}`}>{walker.name}</Link></p><div><button onClick={() => {navigate(`/walkers/${walker.id}`)}}> Add Dog</button></div>
+                        <div><button onClick={() => handleClick(walker.id)}>Remove</button></div>
                     </li>
                 ))}
             </ul>
@@ -48,7 +58,3 @@ export const WalkerList = () => {
 
 
 
-
-//If user clicks walker, they are brought to a page where they can edit walker info
-
-//A remove Walker button next to add dog included, if clicked walker will be removed from api and any dogs previously assigned to walker will be no longer assigned to a walker
