@@ -1,5 +1,6 @@
 using DogWalker.Models;
 using DogWalker.Models.DTOs;
+using Microsoft.AspNetCore.Mvc;
 // using Microsoft.AspNetCore.HttpLogging;
 
 List<Dog> dogs = new List<Dog>
@@ -447,4 +448,38 @@ app.MapDelete("/api/dogs/{id}", (int id) =>
     return Results.NoContent();
 });
 
+app.MapDelete("/api/walkers/{id}", (int id) =>
+{
+    Walker walker = walkers.FirstOrDefault(w =>w.Id == id);
+
+    if (walker == null)
+    {
+        return Results.NotFound();
+    }
+
+    walkers.Remove(walker);
+
+    return Results.NoContent();
+});
+
+app.MapPut("/api/dogs/{id}/unassign", (int id) =>
+{
+    foreach (Dog dog in dogs)
+    {
+        if (dog.WalkerId == id)
+        {
+            dog.WalkerId = null;
+        }
+    }
+    return Results.Ok("Deleted Walkers unassigned from dogs");
+});
+
+app.MapDelete("/api/walker-cities/delete/{id}", (int id) =>
+{
+    foreach (var walkerCity in walkerCities.Where(wc => wc.WalkerId == id).ToList())
+    {
+        walkerCities.Remove(walkerCity);
+    }
+    return Results.Ok("Deleted walker cities with matching WalkerId");
+});
 app.Run();
